@@ -1,7 +1,11 @@
+import Dash from "./pages/dashboard/page";
+
 export default function Home() {
   return (
     <main>
-      <div>Hello world!</div>
+      <div>
+        <Dash/>
+      </div>
     </main>
   );
 }
