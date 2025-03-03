@@ -1,8 +1,18 @@
+"use client"
+import { useState } from "react";
+
+
+
+
 const Ppm = () => {
+   
+    const [quality,setQuality]=useState(1)
+
     return ( 
-        <div className="w-[300px] h-[150px] rounded-3xl border-2 flex flex-col justify-center items-center ">
-            <h1>X PPM</h1>
-            <h3>X PPM</h3>
+        <div className=" flex  justify-center items-center gap-2 ">
+            <h1>Qualidade do Ar: </h1>
+            <h1 className={`pr-4 pl-4 rounded-2xl ${quality>=0 ? 'bg-green-500 text-white ':'bg-red-500'}  `}>{quality}</h1>
+            
         </div>
      );
 }
