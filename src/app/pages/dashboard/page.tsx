@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { FaLeaf, FaMapMarkerAlt, FaClock, FaWind } from "react-icons/fa";
+import { BsCloudFog2 } from "react-icons/bs";
 import logo from "../../../assets/img/CapivaraLab-SF.png";
 
 const Dashboard = () => {
@@ -11,21 +13,21 @@ const Dashboard = () => {
     airQuality: string;
     location: string;
     timestamp: string;
-    } | null>(null);
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseHistorico = await fetch("http://localhost:3001/sensor/media-diaria");
+        const responseHistorico = await fetch("http://localhost:3001/sensor/media-semana");
         const resultHistorico = await responseHistorico.json();
 
         if (!responseHistorico.ok) throw new Error(resultHistorico.message || "Erro ao buscar dados");
 
         const formattedData = resultHistorico.dados.map((dado: any) => ({
-          day: dado.day, 
-          value: dado.value, 
+          day: dado.day,
+          value: dado.value,
         }));
 
         setData(formattedData);
@@ -66,72 +68,85 @@ const Dashboard = () => {
 
   return (
     <div>
-      {/* Cabeçalho com logo */}
-      <div className="bg-white h-16 border-black flex justify-start ml-10 mt-5 items-center">
+      <header className="bg-white h-16 border-black flex justify-start ml-10 mt-5 items-center">
         <img src={logo.src} alt="Logo Capivara Lab" className="h-[80px]" />
-      </div>
+      </header>
 
-      {/* Conteúdo principal */}
-      <div className="flex items-center justify-between p-10">
-        {/* Seção de Nível de CO₂ e Qualidade do Ar */}
-        <div className="w-[400px] h-[300px] shadow-2xl ml-10 rounded-3xl flex flex-col items-center justify-center text-xl p-6 bg-white">
-          {ultimaLeitura ? (
-            <>
-              <div className="flex items-center mb-3">
-                <h1 className="mr-2">Nível de CO₂:</h1>
-                <span className={`w-3 h-3 ${getAirQualityColor(ultimaLeitura.airQuality)} rounded-full mr-2`}></span>
-                <span className="font-bold">{ultimaLeitura.co2Level} PPM</span>
-              </div>
+      <main className="flex items-center justify-between p-10">
+        <section className="w-[400px] h-[275px] shadow-2xl ml-10 rounded-3xl flex flex-col items-center justify-center text-xl p-6 bg-white">
+          {loading ? (
+            <p className="text-gray-500 animate-pulse">Carregando última leitura...</p>
+          ) : error ? (
+            <p className="text-red-500 font-semibold">{error}</p>
+          ) : ultimaLeitura ? (
+            <div className="grid gap-3 text-center">
               <div className="flex items-center">
-                <h1 className="mr-2">Qualidade do Ar:</h1>
-                <span className={`${getAirQualityColor(ultimaLeitura.airQuality)} text-white px-3 py-1 rounded-md`}>
+                <FaWind className="text-blue-600 mr-2" size={24} />
+                <p className="font-semibold">Nível de CO₂:</p>
+                <span className={`w-3 h-3 ${getAirQualityColor(ultimaLeitura.airQuality)} rounded-full ml-2`}></span>
+                <span className="font-bold ml-2">{ultimaLeitura.co2Level} PPM</span>
+              </div>
+
+              <div className="flex items-center">
+                <BsCloudFog2 className="text-blue-500 mr-2" size={24} />
+                <p className="font-semibold">Qualidade do Ar:</p>
+                <span
+                  className={`${getAirQualityColor(ultimaLeitura.airQuality)} text-white px-3 py-1 rounded-md ml-2`}
+                >
                   {ultimaLeitura.airQuality}
                 </span>
               </div>
-              <div className="mt-3 flex">
-                <h1 className="mr-2">Localização:</h1>
-                <span className="font-bold">{ultimaLeitura.location}</span>
-              </div>
-              <div className="mt-3 text-base text-gray-500">
-                <h1 className="mr-2">Última Atualização:</h1>
-                <span className="font-bold">{formatarData(ultimaLeitura.timestamp)}</span>
-              </div>
-            </>
-          ) : (
-            <p>Carregando última leitura...</p>
-          )}
-        </div>
 
-        {/* Seção do gráfico dinâmico */}
-        <div className="mr-10 flex flex-col items-center">
-          <h1 className="text-2xl mb-3 ">Histórico de CO₂ - Semanal</h1>
-          {loading && <p>Carregando...</p>}
-          {error && <p className="text-red-500">{error}</p>}
-          {!loading && !error && (
-            <div className="shadow-2xl w-[400px] h-[400px] rounded-2xl p-4 bg-white">
+              <div className="flex items-center">
+                <FaMapMarkerAlt className="text-red-500 mr-2" size={24} />
+                <p className="font-semibold">Localização:</p>
+                <span className="font-bold ml-2">{ultimaLeitura.location}</span>
+              </div>
+
+              <div className="flex items-center text-gray-500 text-base">
+                <FaClock className="mr-2" size={20} />
+                <p>Última Atualização:</p>
+                <span className="font-bold ml-2">{formatarData(ultimaLeitura.timestamp)}</span>
+              </div>
+            </div>
+          ) : (
+            <p className="text-gray-500">Nenhuma leitura disponível</p>
+          )}
+        </section>
+
+        <section className="mr-10 flex flex-col items-center">
+          <h2 className="text-2xl font-semibold mb-3">Histórico de CO₂ - Semanal</h2>
+
+          {loading ? (
+            <p className="text-gray-500 animate-pulse" aria-live="polite">Carregando...</p>
+          ) : error ? (
+            <p className="text-red-500 font-semibold" aria-live="polite">{error}</p>
+          ) : (
+            <div className="shadow-xl w-[400px] h-[400px] rounded-2xl p-4 bg-white overflow-hidden">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data}>
-                  <XAxis dataKey="day" />
-                  <YAxis domain={[0, 2500] } tickCount={6}/>
-                  <Tooltip />
-                  <Bar dataKey="value" fill="#007bff" />
+                <BarChart data={data} role="img" aria-label="Gráfico semanal de CO₂">
+                  <XAxis dataKey="day" stroke="#4B5563" tick={{ fill: "#4B5563" }} />
+                  <YAxis domain={[0, 2500]} tickCount={6} stroke="#4B5563" tick={{ fill: "#4B5563" }} />
+                  <Tooltip contentStyle={{ backgroundColor: "#FFF", borderRadius: "8px" }} />
+                  <Bar dataKey="value" fill="#007bff" radius={[5, 5, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           )}
-          <p className="mt-2 text-base text-gray-500">Últimos 7 dias</p>
-        </div>
-      </div>
 
-      {/* Rodapé */}
-      <div className="mt-70 bg-blue-400">
+          <p className="mt-2 text-base text-gray-900">Últimos 7 dias</p>
+        </section>
+      </main>
+
+      <footer className="mt-50 bg-blue-400">
         <div className="flex justify-center items-center p-1">
           <h1 className="text-center text-white">
             <span className="font-bold italic">© Capivara Solutions</span>
-            <br />Todos os direitos reservados.
+            <br />
+            Todos os direitos reservados.
           </h1>
         </div>
-      </div>
+      </footer>
     </div>
   );
 };
