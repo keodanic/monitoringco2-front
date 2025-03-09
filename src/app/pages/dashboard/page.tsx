@@ -73,46 +73,54 @@ const Dashboard = () => {
       </header>
 
       <main className="flex items-center justify-between p-10">
-        <section className="w-[400px] h-[275px] shadow-2xl ml-10 rounded-3xl flex flex-col items-center justify-center text-xl p-6 bg-white">
-          {loading ? (
-            <p className="text-gray-500 animate-pulse">Carregando última leitura...</p>
-          ) : error ? (
-            <p className="text-red-500 font-semibold">{error}</p>
-          ) : ultimaLeitura ? (
-            <div className="grid gap-3 text-center">
-              <div className="flex items-center">
-                <FaWind className="text-blue-600 mr-2" size={24} />
-                <p className="font-semibold">Nível de CO₂:</p>
-                <span className={`w-3 h-3 ${getAirQualityColor(ultimaLeitura.airQuality)} rounded-full ml-2`}></span>
-                <span className="font-bold ml-2">{ultimaLeitura.co2Level} PPM</span>
-              </div>
+        <div className="flex flex-col gap-6 items-center">
+          <section className="w-[400px] h-[275px] shadow-2xl ml-10 rounded-3xl flex flex-col items-center justify-center text-xl p-6 bg-white">
+            {loading ? (
+              <p className="text-gray-500 animate-pulse">Carregando última leitura...</p>
+            ) : error ? (
+              <p className="text-red-500 font-semibold">{error}</p>
+            ) : ultimaLeitura ? (
+              <div className="grid gap-3 text-center">
+                <div className="flex items-center">
+                  <FaWind className="text-blue-600 mr-2" size={24} />
+                  <p className="font-semibold">Nível de CO₂:</p>
+                  <span className={`w-3 h-3 ${getAirQualityColor(ultimaLeitura.airQuality)} rounded-full ml-2`}></span>
+                  <span className="font-bold ml-2">{ultimaLeitura.co2Level} PPM</span>
+                </div>
 
-              <div className="flex items-center">
-                <BsCloudFog2 className="text-blue-500 mr-2" size={24} />
-                <p className="font-semibold">Qualidade do Ar:</p>
-                <span
-                  className={`${getAirQualityColor(ultimaLeitura.airQuality)} text-white px-3 py-1 rounded-md ml-2`}
-                >
-                  {ultimaLeitura.airQuality}
-                </span>
-              </div>
+                <div className="flex items-center">
+                  <BsCloudFog2 className="text-blue-500 mr-2" size={24} />
+                  <p className="font-semibold">Qualidade do Ar:</p>
+                  <span
+                    className={`${getAirQualityColor(ultimaLeitura.airQuality)} text-white px-3 py-1 rounded-md ml-2`}
+                  >
+                    {ultimaLeitura.airQuality}
+                  </span>
+                </div>
 
-              <div className="flex items-center">
-                <FaMapMarkerAlt className="text-red-500 mr-2" size={24} />
-                <p className="font-semibold">Localização:</p>
-                <span className="font-bold ml-2">{ultimaLeitura.location}</span>
-              </div>
+                <div className="flex items-center">
+                  <FaMapMarkerAlt className="text-red-500 mr-2" size={24} />
+                  <p className="font-semibold">Localização:</p>
+                  <span className="font-bold ml-2">{ultimaLeitura.location}</span>
+                </div>
 
-              <div className="flex items-center text-gray-500 text-base">
-                <FaClock className="mr-2" size={20} />
-                <p>Última Atualização:</p>
-                <span className="font-bold ml-2">{formatarData(ultimaLeitura.timestamp)}</span>
+                <div className="flex items-center text-gray-500 text-base">
+                  <FaClock className="mr-2" size={20} />
+                  <p>Última Atualização:</p>
+                  <span className="font-bold ml-2">{formatarData(ultimaLeitura.timestamp)}</span>
+                </div>
+                <p className="text-neutral-500 text-sm translate-y-4">As informações serão atualizadas a cada 10 minutos</p>
               </div>
-            </div>
-          ) : (
-            <p className="text-gray-500">Nenhuma leitura disponível</p>
-          )}
-        </section>
+            ) : (
+              <p className="text-gray-500">Nenhuma leitura disponível</p>
+            )}
+          </section>
+          <button 
+          className="bg-blue-500 rounded-2xl p-3 w-36" 
+          onClick={() => window.location.reload()}>
+            Atualizar Página
+          </button>
+        </div>
 
         <section className="mr-10 flex flex-col items-center">
           <h2 className="text-2xl font-semibold mb-3">Histórico de CO₂ - Semanal</h2>
