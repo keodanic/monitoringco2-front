@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-import { FaLeaf, FaMapMarkerAlt, FaClock, FaWind } from "react-icons/fa";
+import { FaMapMarkerAlt, FaClock, FaWind } from "react-icons/fa";
 import { BsCloudFog2 } from "react-icons/bs";
 import logo from "../../../assets/img/CapivaraLab-SF.png";
 
@@ -67,14 +67,17 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      <header className="bg-white h-16 border-black flex justify-start ml-10 mt-5 items-center">
+    <div className="min-h-screen flex flex-col">
+      {/* Header */}
+      <header className="bg-white h-16 border-black flex justify-start items-center p-5 sm:ml-10 sm:mt-5">
         <img src={logo.src} alt="Logo Capivara Lab" className="h-[80px]" />
       </header>
 
-      <main className="flex items-center justify-between p-10">
-        <div className="flex flex-col gap-6 items-center">
-          <section className="w-[400px] h-[275px] shadow-2xl ml-10 rounded-3xl flex flex-col items-center justify-center text-xl p-6 bg-white">
+      {/* Main Content */}
+      <main className="flex flex-col sm:flex-row items-center justify-between p-5 sm:p-10 gap-6 sm:gap-0">
+        {/* Última Leitura Section */}
+        <div className="flex flex-col gap-6 items-center w-full sm:w-auto">
+          <section className="w-full sm:w-[400px] h-[275px] shadow-2xl rounded-3xl flex flex-col items-center justify-center text-xl p-6 bg-white">
             {loading ? (
               <p className="text-gray-500 animate-pulse">Carregando última leitura...</p>
             ) : error ? (
@@ -116,13 +119,15 @@ const Dashboard = () => {
             )}
           </section>
           <button 
-          className="bg-blue-500 rounded-2xl p-3 w-36" 
-          onClick={() => window.location.reload()}>
+            className="bg-blue-500 rounded-2xl p-3 w-36 text-white hover:bg-blue-600 transition-colors"
+            onClick={() => window.location.reload()}
+          >
             Atualizar Página
           </button>
         </div>
 
-        <section className="mr-10 flex flex-col items-center">
+        {/* Gráfico Section */}
+        <section className="w-full sm:w-auto flex flex-col items-center">
           <h2 className="text-2xl font-semibold mb-3">Histórico de CO₂ - Semanal</h2>
 
           {loading ? (
@@ -130,7 +135,7 @@ const Dashboard = () => {
           ) : error ? (
             <p className="text-red-500 font-semibold" aria-live="polite">{error}</p>
           ) : (
-            <div className="shadow-xl w-[400px] h-[400px] rounded-2xl p-4 bg-white overflow-hidden">
+            <div className="shadow-xl w-full sm:w-[400px] h-[400px] rounded-2xl p-4 bg-white overflow-hidden">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data} role="img" aria-label="Gráfico semanal de CO₂">
                   <XAxis dataKey="day" stroke="#4B5563" tick={{ fill: "#4B5563" }} />
@@ -146,7 +151,8 @@ const Dashboard = () => {
         </section>
       </main>
 
-      <footer className="mt-50 bg-blue-400">
+      {/* Footer */}
+      <footer className="mt-auto bg-blue-400">
         <div className="flex justify-center items-center p-1">
           <h1 className="text-center text-white">
             <span className="font-bold italic">© Capivara Solutions</span>
