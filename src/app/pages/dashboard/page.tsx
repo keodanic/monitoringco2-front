@@ -146,7 +146,7 @@ const Dashboard = () => {
                 <BarChart data={data} role="img" aria-label="Gráfico semanal de CO₂">
                   <XAxis dataKey="day" stroke="#4B5563" tick={{ fill: "#4B5563" }} />
                   <YAxis domain={[0, 2500]} tickCount={6} stroke="#4B5563" tick={{ fill: "#4B5563" }} />
-                  <Tooltip contentStyle={{ backgroundColor: "#FFF", borderRadius: "6px" }} />
+                  <Tooltip contentStyle={{ backgroundColor: "#FFF", borderRadius: "8px" }} />
                   <Bar dataKey="value" fill="#007bff" radius={[5, 5, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
