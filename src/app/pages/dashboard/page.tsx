@@ -163,7 +163,7 @@ const Dashboard = () => {
           <h1 className="text-center text-white">
             <span className="font-bold italic">© Capivara Solutions</span>
             <br />
-            Todos os direitos reservados.
+            Todos os direitos reservados
           </h1>
         </div>
       </footer>
