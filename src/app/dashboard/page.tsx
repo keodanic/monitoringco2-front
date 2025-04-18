@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { FaMapMarkerAlt, FaClock, FaWind } from "react-icons/fa";
 import { BsCloudFog2 } from "react-icons/bs";
-import logo from "../../../assets/img/CapivaraLab-SF.png";
+import logo from "./../../assets/img/CapivaraLab-SF.png";
+import Link from "next/link";
 
 const Dashboard = () => {
   const [data, setData] = useState<{ day: string; value: number }[]>([]);
@@ -130,6 +131,12 @@ const Dashboard = () => {
           >
             Atualizar Página
           </button>
+          <button 
+            className="bg-blue-500 rounded-2xl p-3 w-36 text-white hover:bg-blue-600 transition-colors"
+          >
+            <Link href="/history">Historico</Link>
+            
+          </button>
         </div>
 
         {/* Gráfico Section */}
@@ -163,7 +170,7 @@ const Dashboard = () => {
           <h1 className="text-center text-white">
             <span className="font-bold italic">© Capivara Solutions</span>
             <br />
-            Todos os direitos reservados.
+            Todos os direitos reservados
           </h1>
         </div>
       </footer>
