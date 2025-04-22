@@ -77,6 +77,7 @@ const Dashboard = () => {
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header className="bg-white h-16 border-black flex justify-start items-center p-5 sm:ml-10 sm:mt-5">
+        
         <img src={logo.src} alt="Logo Capivara Lab" className="h-[80px]" />
       </header>
 
@@ -131,12 +132,6 @@ const Dashboard = () => {
           >
             Atualizar Página
           </button>
-          <button 
-            className="bg-blue-500 rounded-2xl p-3 w-36 text-white hover:bg-blue-600 transition-colors"
-          >
-            <Link href="/history">Historico</Link>
-            
-          </button>
         </div>
 
         {/* Gráfico Section */}
@@ -161,6 +156,12 @@ const Dashboard = () => {
           )}
 
           <p className="mt-2 text-base text-gray-900">Últimos 7 dias</p>
+          <button 
+            className="bg-blue-500 rounded-2xl p-3 w-36 text-white hover:bg-blue-600 transition-colors"
+          >
+            <Link href="/history">Ver Historico</Link>
+            
+          </button>
         </section>
       </main>
 
