@@ -6,8 +6,12 @@ import { FaMapMarkerAlt, FaClock, FaWind } from "react-icons/fa";
 import { BsCloudFog2 } from "react-icons/bs";
 import logo from "./../../assets/img/CapivaraLab-SF.png";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+
 
 const Dashboard = () => {
+  const router = useRouter();
   const [data, setData] = useState<{ day: string; value: number }[]>([]);
   const [ultimaLeitura, setUltimaLeitura] = useState<{
     co2Level: number;
@@ -157,10 +161,10 @@ const Dashboard = () => {
 
           <p className="mt-2 text-base text-gray-900">Últimos 7 dias</p>
           <button 
+          onClick={()=>router.push("/history")}
             className="bg-blue-500 rounded-2xl p-3 w-36 text-white hover:bg-blue-600 transition-colors"
           >
-            <Link href="/history">Ver Historico</Link>
-            
+           Ver Historico
           </button>
         </section>
       </main>
